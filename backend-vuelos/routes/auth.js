@@ -6,23 +6,19 @@ require("dotenv").config();
 
 const router = express.Router();
 
-// **Registro de usuario**
 router.post("/register", async (req, res) => {
     const { nombre, email, password } = req.body;
 
     try {
-        // Validar que los campos no estén vacíos
         if (!nombre || !email || !password) {
             return res.status(400).json({ message: "Todos los campos son obligatorios" });
         }
 
-        // Verificar si el usuario ya existe
         const existeUsuario = await pool.query("SELECT * FROM usuarios WHERE email = $1", [email]);
         if (existeUsuario.rows.length > 0) {
             return res.status(400).json({ message: "El usuario ya existe" });
         }
 
-        // Hashear la contraseña antes de guardarla
         const salt = await bcrypt.genSalt(10);
         const passwordHasheado = await bcrypt.hash(password, salt);
 
@@ -30,7 +26,6 @@ router.post("/register", async (req, res) => {
             return res.status(500).json({ message: "Error al encriptar la contraseña" });
         }
 
-        // Insertar usuario en la base de datos
         const nuevoUsuario = await pool.query(
             "INSERT INTO usuarios (nombre, email, password, fecha_registro) VALUES ($1, $2, $3, NOW()) RETURNING id, nombre, email, fecha_registro",
             [nombre, email, passwordHasheado]
@@ -44,29 +39,25 @@ router.post("/register", async (req, res) => {
     }
 });
 
-// **Inicio de sesión**
+// Inicio de sesión
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        // Validar que los campos no estén vacíos
         if (!email || !password) {
             return res.status(400).json({ message: "Email y contraseña son obligatorios" });
         }
 
-        // Buscar usuario en la base de datos
         const usuario = await pool.query("SELECT * FROM usuarios WHERE email = $1", [email]);
         if (usuario.rows.length === 0) {
             return res.status(400).json({ message: "Usuario no encontrado" });
         }
 
-        // Verificar la contraseña
         const passwordValida = await bcrypt.compare(password, usuario.rows[0].password);
         if (!passwordValida) {
             return res.status(401).json({ message: "Contraseña incorrecta" });
         }
 
-        // Crear el token JWT
         const token = jwt.sign(
             { id: usuario.rows[0].id, email: usuario.rows[0].email },
             process.env.JWT_SECRET,
@@ -81,7 +72,7 @@ router.post("/login", async (req, res) => {
     }
 });
 
-// **Ruta protegida de prueba**
+// Ruta protegida de prueba
 router.get("/perfil", async (req, res) => {
     try {
         const token = req.header("Authorization");
@@ -116,4 +107,4 @@ function verificarToken(req, res, next) {
     }
 }
 
-module.exports = router;  // Exporta solo el router
+module.exports = router;  
