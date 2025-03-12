@@ -144,4 +144,4 @@ Respuesta:
 }
 ````
 ### 👤 Autor
-Desarrollado por Carlos Tingo
+Desarrollado por **Carlos Tingo**
