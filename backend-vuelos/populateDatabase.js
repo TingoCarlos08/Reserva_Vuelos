@@ -17,12 +17,12 @@ async function obtenerVuelos() {
     });
 
     if (!response.data || !response.data.data) {
-      console.error("❌ Error: Respuesta de API inválida");
+      console.error("Error: Respuesta de API inválida");
       return [];
     }
 
     const vuelos = response.data.data;
-    console.log(`✅ Se obtuvieron ${vuelos.length} vuelos.`);
+    console.log(`Se obtuvieron ${vuelos.length} vuelos.`);
     return vuelos;
   } catch (error) {
     console.error("Error al obtener vuelos:", error.message);
