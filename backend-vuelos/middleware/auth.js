@@ -9,7 +9,6 @@ function verificarToken(req, res, next) {
     }
 
     try {
-        // Eliminar "Bearer " si está presente
         const tokenLimpio = token.replace("Bearer ", "").trim();
 
         const verificado = jwt.verify(tokenLimpio, process.env.JWT_SECRET);
