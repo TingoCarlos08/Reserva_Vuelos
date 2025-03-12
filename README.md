@@ -36,7 +36,80 @@ API_KEY_AVIATIONSTACK=tu_api_key
 
 ### 4️⃣ **Crear la base de datos**
 Ejecutar el script de creación de la base de datos y las tablas en PostgreSQL.
+````sql
+-- Crear la base de datos (ejecutar esto solo si la base de datos no existe)
+CREATE DATABASE reserva_Vuelos;
 
+-- Usar la base de datos
+\c reserva_Vuelos;
+
+-- Tabla de usuarios
+CREATE TABLE usuarios (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT NOW()
+);
+
+-- Tabla de aeropuertos
+CREATE TABLE aeropuertos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    ciudad VARCHAR(100),
+    pais VARCHAR(100),
+    iata VARCHAR(10) UNIQUE NOT NULL,
+    icao VARCHAR(10) UNIQUE NOT NULL
+);
+
+-- Tabla de aerolíneas
+CREATE TABLE aerolineas (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    iata VARCHAR(10) UNIQUE NOT NULL,
+    icao VARCHAR(10) UNIQUE NOT NULL
+);
+
+-- Tabla de vuelos
+CREATE TABLE vuelos (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    fecha DATE NOT NULL,
+    estado VARCHAR(50),
+    id_aeropuerto_origen INTEGER REFERENCES aeropuertos(id) ON DELETE CASCADE,
+    id_aeropuerto_destino INTEGER REFERENCES aeropuertos(id) ON DELETE CASCADE,
+    id_aerolinea INTEGER REFERENCES aerolineas(id) ON DELETE CASCADE,
+    numero_vuelo VARCHAR(20) UNIQUE NOT NULL,
+    iata VARCHAR(10),
+    icao VARCHAR(10),
+    horario_salida TIMESTAMP,
+    horario_llegada TIMESTAMP
+);
+
+-- Tabla de reservas
+CREATE TABLE reservas (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    id_usuario UUID REFERENCES usuarios(id) ON DELETE CASCADE,
+    id_vuelo UUID REFERENCES vuelos(id) ON DELETE CASCADE,
+    fecha_reserva TIMESTAMP DEFAULT NOW(),
+    estado VARCHAR(50) DEFAULT 'Confirmada'
+);
+````
+### 🔹 Ejecutar el Script en PostgreSQL
+Abre PgAdmin4 o conéctate a PostgreSQL desde la terminal.
+Si usas la terminal de PostgreSQL, ejecuta:
+````bash
+psql -U postgres -f database.sql
+````
+Si lo haces desde PgAdmin4:
+- Abre PgAdmin4 y selecciona la base de datos reserva_Vuelos.
+- Haz clic en "Query Tool".
+- Copia y pega el contenido de database.sql en el editor.
+- Ejecuta el script (icono de "Play").
+### 🔹 Después de ejecutar esto, tu base de datos y tablas estarán listas. Luego, puedes ejecutar:
+````bash
+node populateDatabase.js
+````
+Para poblar la base de datos con datos de vuelos.
 
 Si deseas importar la base de datos con datos, usa el backup disponible en /backup/reserva_vuelos.sql y restáuralo con:
 
