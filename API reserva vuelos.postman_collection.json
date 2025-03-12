@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "46871ea0-8468-48b7-9270-09394e34e81e",
+		"name": "API reserva vuelos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37754759",
+		"_collection_link": "https://interstellar-meteor-896606.postman.co/workspace/1a5e791f-4845-44cd-8768-509146b5faca/collection/37754759-46871ea0-8468-48b7-9270-09394e34e81e?action=share&source=collection_link&creator=37754759"
+	},
+	"item": [
+		{
+			"name": "/api/auth/register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Raul Borbor\",\r\n    \"email\": \"rborobr@example.com\",\r\n    \"password\": \"123456\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				},
+				"description": "Registra un nuevo usuario en la plataforma.\n\nRespuesta esperada (201 - Creado):\n\n``` json\n{\n  \"message\": \"Usuario registrado exitosamente\",\n  \"usuario\": {\n    \"id\": \"uuid-del-usuario\",\n    \"nombre\": \"Raul Borbor\",\n    \"email\": \"rborobr@example.com\",\n    \"fecha_registro\": \"2025-03-12T12:34:56.789Z\"\n  }\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/auth/login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"carlos@example.com\",\r\n    \"password\": \"123456\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				},
+				"description": "Permite a un usuario iniciar sesión y obtener un token de autenticación.\n\n**Respuesta esperada (200 - OK):**\n\n``` json\n{\n  \"message\": \"Inicio de sesión exitoso\",\n  \"token\": \"jwt-token-aquí\"\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/reservas",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxN2IyYjQ4LWEwMTItNDRiMy04YjZkLTAzZjkzMDczODdjZSIsImVtYWlsIjoiY2FybG9zQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQxNzU4MDUxLCJleHAiOjE3NDE3NjUyNTF9.SZyYKJrwcE_KSCINjlJCbzhd4tbOKn-L2ewqKKi0jT0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_vuelo\": \"1c9bd034-4a56-498c-8a81-59fa39308d13\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/reservas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reservas"
+					]
+				},
+				"description": "Reservar un vuelo"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/reservas",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxN2IyYjQ4LWEwMTItNDRiMy04YjZkLTAzZjkzMDczODdjZSIsImVtYWlsIjoiY2FybG9zQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQxNzU4MDUxLCJleHAiOjE3NDE3NjUyNTF9.SZyYKJrwcE_KSCINjlJCbzhd4tbOKn-L2ewqKKi0jT0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/reservas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reservas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/reservas/:id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxN2IyYjQ4LWEwMTItNDRiMy04YjZkLTAzZjkzMDczODdjZSIsImVtYWlsIjoiY2FybG9zQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQxNzU4MDUxLCJleHAiOjE3NDE3NjUyNTF9.SZyYKJrwcE_KSCINjlJCbzhd4tbOKn-L2ewqKKi0jT0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/reservas/59a39aba-5a93-4afe-ac5d-bab59a6fed8e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reservas",
+						"59a39aba-5a93-4afe-ac5d-bab59a6fed8e"
+					]
+				},
+				"description": "Eliminar una reserva"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/usuarios/:usuarioId/reservas",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxN2IyYjQ4LWEwMTItNDRiMy04YjZkLTAzZjkzMDczODdjZSIsImVtYWlsIjoiY2FybG9zQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQxNzU4MDUxLCJleHAiOjE3NDE3NjUyNTF9.SZyYKJrwcE_KSCINjlJCbzhd4tbOKn-L2ewqKKi0jT0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/usuarios/417b2b48-a012-44b3-8b6d-03f9307387ce/reservas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"usuarios",
+						"417b2b48-a012-44b3-8b6d-03f9307387ce",
+						"reservas"
+					]
+				},
+				"description": "Lista de reservas por usuario"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/vuelos?origen=XXX&destino=XXX&fecha=YYYY-MM-DD",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/vuelos?origen=1&destino=2&fecha=2025-03-12",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"vuelos"
+					],
+					"query": [
+						{
+							"key": "origen",
+							"value": "1"
+						},
+						{
+							"key": "destino",
+							"value": "2"
+						},
+						{
+							"key": "fecha",
+							"value": "2025-03-12"
+						}
+					]
+				},
+				"description": "Buscar Vuelos por fecha"
+			},
+			"response": []
+		}
+	]
+}
