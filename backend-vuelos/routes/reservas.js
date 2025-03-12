@@ -3,7 +3,7 @@ const pool = require("../db");
 const router = express.Router();
 const verificarToken = require("../middleware/auth"); // Importa el middleware correcto
 
-// **Crear una reserva (requiere autenticación)**
+// Crear una reserva (Autenticacion)
 router.post("/", verificarToken, async (req, res) => {
     try {
         const { id_vuelo } = req.body;
