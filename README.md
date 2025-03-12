@@ -37,6 +37,17 @@ API_KEY_AVIATIONSTACK=tu_api_key
 ### 4️⃣ **Crear la base de datos**
 Ejecutar el script de creación de la base de datos y las tablas en PostgreSQL.
 
+
+Si deseas importar la base de datos con datos, usa el backup disponible en /backup/reserva_vuelos.sql y restáuralo con:
+
+````bash
+psql -U postgres -d reserva_Vuelos -f backup/reserva_vuelos.sql
+````
+Si solo deseas crear las tablas, usa:
+
+````bash
+psql -U postgres -d reserva_Vuelos -f backup/schema.sql
+````
 ### 5️⃣ **Poblar la base de datos con vuelos**
 Ejecutar el siguiente comando para poblar la base de datos con vuelos:
 ```bash
